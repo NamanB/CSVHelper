@@ -40,7 +40,7 @@ public class CSVData {
 	 * @param rowIndex the index of the row
 	 * @return all the values in a row
 	 */
-	public double[] getRows(int rowIndex) {
+	public double[] getRow(int rowIndex) {
 		return data[rowIndex];
 	}
 	
@@ -54,7 +54,15 @@ public class CSVData {
 		return null;
 	}
 	
+	public double[] getColumn(String name) {
+		return null;
+	}
+	
 	public double[][] getRows(int[] rowIndexes) {
+		return null;
+	}
+	
+	public double[][] getRows(int startIndex, int endIndex) {
 		return null;
 	}
 	
@@ -62,8 +70,20 @@ public class CSVData {
 		return null;
 	}
 	
+	public double[][] getColumns(int startIndex, int endIndex) {
+		return null;
+	}
+	
+	public double[][] getColumns(String[] colNames) {
+		return null;
+	}
+	
 	public void setValue(int rowIndex, int columnIndex, double value) {
 		
+	}
+	
+	public double returnSetValue(int rowIndex, int columnIndex, double value) {
+		return data[rowIndex][columnIndex];
 	}
 	
 	public void setRow(int rowIndex, double[] rowValues) {
