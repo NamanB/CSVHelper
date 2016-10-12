@@ -54,52 +54,150 @@ public class CSVData {
 		return null;
 	}
 	
+	/***
+	 * Returns all the values in a column
+	 * 
+	 * @param name the name of the column
+	 * @return all the values in a column
+	 */
 	public double[] getColumn(String name) {
 		return null;
 	}
 	
+	/***
+	 * Returns all the values from multiple rows. 
+	 * It keeps the rows sorted.
+	 * 
+	 * @param rowIndexes the indexes of the rows
+	 * @return all the values from multiple rows
+	 */
 	public double[][] getRows(int[] rowIndexes) {
 		return null;
 	}
 	
+	/***
+	 * Returns all the values from rows between a start row and an end row. 
+	 * It keeps the rows sorted.
+	 * 
+	 * @param startIndex the row index to start from
+	 * @param endIndex the column index to start from
+	 * @return all the values in the rows
+	 */
 	public double[][] getRows(int startIndex, int endIndex) {
 		return null;
 	}
 	
+	/***
+	 * Returns all the values in columns. 
+	 * It keeps the columns sorted.
+	 * 
+	 * @param columnIndexes the indexes of the columns to return
+	 * @return the values in the columns specified
+	 */
 	public double[][] getColumns(int[] columnIndexes) {
 		return null;
 	}
 	
+	/***
+	 * Returns all the values in columns. 
+	 * It keeps the columns sorted.
+	 * 
+	 * @param startIndex the index to start from
+	 * @param endIndex the index to end at
+	 * @return the values in the columns specified
+	 */
 	public double[][] getColumns(int startIndex, int endIndex) {
 		return null;
 	}
 	
+	/***
+	 * Returns all the values in columns. 
+	 * It keeps the columns sorted.
+	 * 
+	 * @param colNames the names of the columns to return values from
+	 * @return the values in the columns specified
+	 */
 	public double[][] getColumns(String[] colNames) {
 		return null;
 	}
 	
+	/***
+	 * Sets a value at a specific spot
+	 * 
+	 * @param rowIndex the row index
+	 * @param columnIndex the column index
+	 * @param value the value to save
+	 */
 	public void setValue(int rowIndex, int columnIndex, double value) {
 		
 	}
 	
+	/***
+	 * Returns then sets a value at a specific spot 
+	 * 
+	 * @param rowIndex the row index
+	 * @param columnIndex the column index
+	 * @param value the value to store
+	 * @return the old value in that spot
+	 */
 	public double returnSetValue(int rowIndex, int columnIndex, double value) {
 		return data[rowIndex][columnIndex];
 	}
 	
+	/***
+	 * Sets a full row
+	 * 
+	 * @param rowIndex the index for the row to replace
+	 * @param rowValues the values to save into the row
+	 */
 	public void setRow(int rowIndex, double[] rowValues) {
 		
 	}
 	
+	/***
+	 * Sets a full column
+	 * 
+	 * @param columnIndex the index of the column
+	 * @param columnValues the values to store in the column
+	 */
 	public void setColumn(int columnIndex, double[] columnValues) {
 		
 	}
 	
+	/***
+	 * Sets a full column
+	 * 
+	 * @param colName the name of the column to set
+	 * @param columnValues the values to store in the column
+	 */
+	public void setColumn(String colName, double[] columnValues) {
+		
+	}
+	
+	/***
+	 * Returns the column titles
+	 * 
+	 * @return the column titles
+	 */
 	public String[] getColumnTitles() {
 		return columnNames;
 	}
 	
+	/***
+	 * Saves the current state of the object into a CSV file
+	 */
 	public void saveCurrentState() {
 		
+	}
+	
+	/***
+	 * Finds the index for the column specified by name
+	 * 
+	 * @param colName the name of the column
+	 * @return the column index
+	 */
+	public int getColumnIndex(String colName) {
+		return 0;
 	}
 	
 }
