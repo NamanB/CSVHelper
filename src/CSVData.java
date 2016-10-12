@@ -51,7 +51,12 @@ public class CSVData {
 	 * @return all the values in a column
 	 */
 	public double[] getColumn(int columnIndex) {
-		return null;
+		double[] columnValues = new double[data.length];
+		
+		for (int i = 0; i < data.length; i++) 
+			columnValues[i] = data[columnIndex][i];
+		
+		return columnValues;
 	}
 	
 	/***
@@ -61,7 +66,9 @@ public class CSVData {
 	 * @return all the values in a column
 	 */
 	public double[] getColumn(String name) {
-		return null;
+		int index = getColumnIndex(name);
+		
+		return getColumn(index);
 	}
 	
 	/***
@@ -72,7 +79,12 @@ public class CSVData {
 	 * @return all the values from multiple rows
 	 */
 	public double[][] getRows(int[] rowIndexes) {
-		return null;
+		double[][] output = new double[data.length][data[0].length];
+		
+		for (int i = 0; i < rowIndexes.length; i++) 
+			output[i] = data[rowIndexes[i]];
+		
+		return output;
 	}
 	
 	/***
@@ -191,13 +203,17 @@ public class CSVData {
 	}
 	
 	/***
-	 * Finds the index for the column specified by name
+	 * Finds the index for the column specified by name. 
+	 * Returns -1 if the name is invalid
 	 * 
 	 * @param colName the name of the column
 	 * @return the column index
 	 */
 	public int getColumnIndex(String colName) {
-		return 0;
+		for (int i = 0; i < columnNames.length; i++) 
+			if (colName.equals(columnNames[i])) return i;
+		
+		return -1;
 	}
 	
 }
