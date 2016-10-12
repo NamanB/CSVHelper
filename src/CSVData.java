@@ -147,7 +147,12 @@ public class CSVData {
 	 * @return the values in the columns specified
 	 */
 	public double[][] getColumns(String[] colNames) {
-		return null;
+		int[] columnIndexes = new int[colNames.length];
+		
+		for (int i = 0; i < colNames.length; i++) 
+			columnIndexes[i] = getColumnIndex(colNames[i]);
+		
+		return getColumns(columnIndexes);
 	}
 	
 	/***
