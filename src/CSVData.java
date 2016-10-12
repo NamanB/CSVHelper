@@ -163,7 +163,7 @@ public class CSVData {
 	 * @param value the value to save
 	 */
 	public void setValue(int rowIndex, int columnIndex, double value) {
-		
+		data[rowIndex][columnIndex] = value;
 	}
 	
 	/***
@@ -175,7 +175,11 @@ public class CSVData {
 	 * @return the old value in that spot
 	 */
 	public double returnSetValue(int rowIndex, int columnIndex, double value) {
-		return data[rowIndex][columnIndex];
+		double output = data[rowIndex][columnIndex];
+		
+		data[rowIndex][columnIndex] = value;
+		
+		return output;
 	}
 	
 	/***
