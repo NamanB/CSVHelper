@@ -96,7 +96,7 @@ public class CSVData {
 	 * @return all the values in the rows
 	 */
 	public double[][] getRows(int startIndex, int endIndex) {
-		int difference = startIndex - endIndex, currentIndex = 0;
+		int difference = endIndex - startIndex, currentIndex = 0;
 		double[][] output = new double[data.length][difference];
 		
 		for (int i = startIndex; i <= endIndex; i++) 
@@ -113,7 +113,12 @@ public class CSVData {
 	 * @return the values in the columns specified
 	 */
 	public double[][] getColumns(int[] columnIndexes) {
-		return null;
+		double[][] output = new double[data[0].length][columnIndexes.length];
+		
+		for (int i = 0; i < columnIndexes.length; i++) 
+			output[i] = getColumn(columnIndexes[i]);
+		
+		return output;
 	}
 	
 	/***
@@ -125,7 +130,13 @@ public class CSVData {
 	 * @return the values in the columns specified
 	 */
 	public double[][] getColumns(int startIndex, int endIndex) {
-		return null;
+		int difference = endIndex-startIndex;
+		double[][] output = new double[data[0].length][difference];
+		
+		for (int i = 0; i < difference; i++) 
+			output[i] = getColumn(startIndex+i);
+		
+		return output;
 	}
 	
 	/***
