@@ -79,7 +79,7 @@ public class CSVData {
 	 * @return all the values from multiple rows
 	 */
 	public double[][] getRows(int[] rowIndexes) {
-		double[][] output = new double[data.length][data[0].length];
+		double[][] output = new double[data.length][rowIndexes.length];
 		
 		for (int i = 0; i < rowIndexes.length; i++) 
 			output[i] = data[rowIndexes[i]];
@@ -96,7 +96,13 @@ public class CSVData {
 	 * @return all the values in the rows
 	 */
 	public double[][] getRows(int startIndex, int endIndex) {
-		return null;
+		int difference = startIndex - endIndex, currentIndex = 0;
+		double[][] output = new double[data.length][difference];
+		
+		for (int i = startIndex; i <= endIndex; i++) 
+			output[currentIndex++] = data[i];
+		
+		return output;
 	}
 	
 	/***
