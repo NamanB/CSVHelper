@@ -242,6 +242,7 @@ public class CSVData {
 		for (int i = 0; i < columnNames.length; i++) 
 			if (colName.equals(columnNames[i])) return i;
 		
+		System.out.println("The column name " + colName + " does not exist as a column title");
 		return -1;
 	}
 	
