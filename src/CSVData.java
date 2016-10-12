@@ -189,7 +189,7 @@ public class CSVData {
 	 * @param rowValues the values to save into the row
 	 */
 	public void setRow(int rowIndex, double[] rowValues) {
-		
+		data[rowIndex] = rowValues;
 	}
 	
 	/***
@@ -199,7 +199,8 @@ public class CSVData {
 	 * @param columnValues the values to store in the column
 	 */
 	public void setColumn(int columnIndex, double[] columnValues) {
-		
+		for (int i = 0; i < data[0].length; i++)
+			data[columnIndex][i] = columnValues[i];
 	}
 	
 	/***
@@ -209,7 +210,9 @@ public class CSVData {
 	 * @param columnValues the values to store in the column
 	 */
 	public void setColumn(String colName, double[] columnValues) {
+		int columnIndex = getColumnIndex(colName);
 		
+		setColumn(columnIndex, columnValues);
 	}
 	
 	/***
