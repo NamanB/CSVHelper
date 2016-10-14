@@ -10,7 +10,6 @@ import java.util.Scanner;
  */
 public class CSVData {
 	private String filePathToCSV;
-	private int numRows;
 	private double[][] data;
 	private String[] columnNames;
 	
@@ -31,7 +30,6 @@ public class CSVData {
 
 		// number of data points
 		int n = lines.length - startRow;
-		this.numRows = n;
 		int numColumns = columnNames.length;
 
 		// create storage for column names
@@ -59,7 +57,7 @@ public class CSVData {
 	 * @param numLinesToIgnore number of lines at the top to ignore
 	 * @return a CVSData object for that file
 	 */
-	public CSVData (String filename, int numLinesToIgnore) {
+	public CSVData(String filename, int numLinesToIgnore) {
 		
 	}
 	
@@ -293,6 +291,10 @@ public class CSVData {
 		
 		System.out.println("The column name " + colName + " does not exist as a column title");
 		return -1;
+	}
+	
+	public String getFilePath() {
+		return filePathToCSV;
 	}
 	
 }
