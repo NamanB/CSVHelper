@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 /***
  * A class to read/write numerical CSV files and allow easy access
  * 
@@ -5,6 +9,8 @@
  *
  */
 public class CSVData {
+	private String filePathToCSV;
+	private int numRows;
 	private double[][] data;
 	private String[] columnNames;
 	
@@ -17,8 +23,31 @@ public class CSVData {
 	 * @param colunmNames the names of the columns
 	 * @return a CVSData object for that file
 	 */
-	public CSVData readCSVFile(String filename, int numLinesToIgnore, String[] colunmNames) {
-		return null;
+	public CSVData(String filepath, int startRow, String[] columnNames) {
+		this.filePathToCSV = filepath;
+
+		String dataString = readFileAsString(filepath);
+		String[] lines = dataString.split("\n");
+
+		// number of data points
+		int n = lines.length - startRow;
+		this.numRows = n;
+		int numColumns = columnNames.length;
+
+		// create storage for column names
+		this.columnNames = columnNames;
+
+		// create storage for data
+		this.data = new double[n][numColumns];
+		for (int i = 0; i < lines.length - startRow; i++) {
+			String line = lines[startRow + i];
+			String[] coords = line.split(",");
+			for (int j = 0; j < numColumns; j++) {
+				if (coords[j].endsWith("#")) coords[j] = coords[j].substring(0, coords[j].length()-1);
+				double val = Double.parseDouble(coords[j]);
+				data[i][j] = val;
+			}
+		}
 	}
 	
 	/***
@@ -30,10 +59,30 @@ public class CSVData {
 	 * @param numLinesToIgnore number of lines at the top to ignore
 	 * @return a CVSData object for that file
 	 */
-	public CSVData readCSVFile(String filename, int numLinesToIgnore) {
-		return null;
+	public CSVData (String filename, int numLinesToIgnore) {
+		
 	}
 	
+	/***
+	 * Converts the file into a String
+	 * 
+	 * @param filepath the path to the string 
+	 * @return the String version of the file
+	 */
+	private String readFileAsString(String filepath) {
+		StringBuilder output = new StringBuilder();
+		try (Scanner scanner = new Scanner(new File(filepath))) {
+			while (scanner.hasNext()) {
+				String line = scanner.nextLine();
+				output.append(line + System.getProperty("line.separator"));
+			}
+			scanner.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return output.toString();
+	}
+
 	/***
 	 * Returns all the values in a row
 	 * 
