@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /***
@@ -52,6 +53,44 @@ public class CSVData {
 	
 	/***
 	 * Returns a new CVSData object for a file ignoring lines at the top. 
+	 * All other data is stored as doubles. The first line in the CSV file 
+	 * must contain the names of the columns
+	 * 
+	 * @param filename the file to read
+	 * @param numLinesToIgnore number of lines at the top to ignore
+	 * @return a CVSData object for that file
+	 */
+	public CSVData(String filepath, int startRow) {
+		this.filePathToCSV = filepath;
+
+		String dataString = readFileAsString(filepath);
+		String[] lines = dataString.split("\n");
+
+		// create storage for column names
+		String[] colNames = getColumnNames(lines[0]);
+		this.columnNames = colNames;
+
+		// number of data points
+		int n = lines.length - startRow;
+		this.numRows = n;
+		int numColumns = colNames.length;
+
+		
+		// create storage for data
+		this.data = new double[n][numColumns];
+		for (int i = 0; i < lines.length - startRow; i++) {
+			String line = lines[startRow + i];
+			String[] coords = line.split(",");
+			for (int j = 0; j < numColumns; j++) {
+				if (coords[j].endsWith("#")) coords[j] = coords[j].substring(0, coords[j].length()-1);
+				double val = Double.parseDouble(coords[j]);
+				data[i][j] = val;
+			}
+		}
+	}
+	
+	/***
+	 * Returns a new CVSData object for a file ignoring lines at the top. 
 	 * It uses the first row as the column names. All other data is stored 
 	 * as doubles.
 	 * 
@@ -59,8 +98,31 @@ public class CSVData {
 	 * @param numLinesToIgnore number of lines at the top to ignore
 	 * @return a CVSData object for that file
 	 */
-	public CSVData(String filename, int numLinesToIgnore) {
-		
+	public static CSVData newCSVData(String filepath, int numLinesToIgnore) {
+		return new CSVData(filepath, numLinesToIgnore);
+	}
+	
+	/***
+	 * Returns a new CVSData object for a file ignoring lines at the top. 
+	 * It uses the first row as the column names. All other data is stored 
+	 * as doubles.
+	 * 
+	 * @param filename the file to read
+	 * @param numLinesToIgnore number of lines at the top to ignore
+	 * @return a CVSData object for that file
+	 */
+	public static CSVData newCSVData(String filepath, int numLinesToIgnore, String[] columnNames) {
+		return new CSVData(filepath, numLinesToIgnore, columnNames);
+	}
+	
+	/***
+	 * Returns an array containing the column names
+	 * 
+	 * @param titleLine the string containing the title names separated by columns
+	 * @return the array containing the column names
+	 */
+	public String[] getColumnNames(String titleLine) {
+		return titleLine.split(",");
 	}
 	
 	/***
