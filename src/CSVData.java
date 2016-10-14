@@ -15,6 +15,11 @@ public class CSVData {
 	
 	public static void main(String[] args) {
 		CSVData a = new CSVData("/Users/naman/Desktop/test1.txt", 1, new String[] {"timestamp(unix)","attitude_roll(radians)","attitude_pitch(radians)","attitude_yaw(radians)","rotation_rate_x(radians/s)","rotation_rate_y(radians/s)","rotation_rate_z(radians/s)","gravity_x(G)","gravity_y(G)","gravity_z(G)","user_acc_x(G)","user_acc_y(G)","user_acc_z(G)","magnetic_field_x(microteslas)","magnetic_field_y(microteslas)","magnetic_field_z(microteslas)","latitude(degree)","longitude(degree)","altitude(meter)","speed(m/s)","course(degree)","timestamp(unix)"});
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 6; j++) 
+				System.out.print(a.getValue(i, j) + ", ");
+			System.out.println();
+		}
 		
 	}
 	
@@ -205,6 +210,17 @@ public class CSVData {
 			columnIndexes[i] = getColumnIndex(colNames[i]);
 		
 		return getColumns(columnIndexes);
+	}
+	
+	/***
+	 * Returns one value
+	 * 
+	 * @param rowIndex the row index
+	 * @param colIndex the column index
+	 * @return the value at that point
+	 */
+	public double getValue(int rowIndex, int colIndex) {
+		return this.data[rowIndex][colIndex];
 	}
 	
 	/***
