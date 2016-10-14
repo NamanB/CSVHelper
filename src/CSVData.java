@@ -13,6 +13,11 @@ public class CSVData {
 	private double[][] data;
 	private String[] columnNames;
 	
+	public static void main(String[] args) {
+		CSVData a = new CSVData("/Users/naman/Desktop/test1.txt", 1, new String[] {"timestamp(unix)","attitude_roll(radians)","attitude_pitch(radians)","attitude_yaw(radians)","rotation_rate_x(radians/s)","rotation_rate_y(radians/s)","rotation_rate_z(radians/s)","gravity_x(G)","gravity_y(G)","gravity_z(G)","user_acc_x(G)","user_acc_y(G)","user_acc_z(G)","magnetic_field_x(microteslas)","magnetic_field_y(microteslas)","magnetic_field_z(microteslas)","latitude(degree)","longitude(degree)","altitude(meter)","speed(m/s)","course(degree)","timestamp(unix)"});
+		
+	}
+	
 	/***
 	 * Returns a new CVSData object for a file ignoring lines at the top. 
 	 * All other data is stored as doubles.
@@ -260,6 +265,15 @@ public class CSVData {
 		int columnIndex = getColumnIndex(colName);
 		
 		setColumn(columnIndex, columnValues);
+	}
+	
+	/***
+	 * Sets all the data to the input data 
+	 * 
+	 * @param data the double array data
+	 */
+	public void setData(double[][] data) {
+		this.data = data;
 	}
 	
 	/***
