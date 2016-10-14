@@ -9,19 +9,10 @@ import java.util.Scanner;
  *
  */
 public class CSVData {
+	private int numRows;
 	private String filePathToCSV;
 	private double[][] data;
 	private String[] columnNames;
-	
-	public static void main(String[] args) {
-		CSVData a = new CSVData("/Users/naman/Desktop/test1.txt", 1, new String[] {"timestamp(unix)","attitude_roll(radians)","attitude_pitch(radians)","attitude_yaw(radians)","rotation_rate_x(radians/s)","rotation_rate_y(radians/s)","rotation_rate_z(radians/s)","gravity_x(G)","gravity_y(G)","gravity_z(G)","user_acc_x(G)","user_acc_y(G)","user_acc_z(G)","magnetic_field_x(microteslas)","magnetic_field_y(microteslas)","magnetic_field_z(microteslas)","latitude(degree)","longitude(degree)","altitude(meter)","speed(m/s)","course(degree)","timestamp(unix)"});
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 6; j++) 
-				System.out.print(a.getValue(i, j) + ", ");
-			System.out.println();
-		}
-		
-	}
 	
 	/***
 	 * Returns a new CVSData object for a file ignoring lines at the top. 
@@ -40,6 +31,7 @@ public class CSVData {
 
 		// number of data points
 		int n = lines.length - startRow;
+		this.numRows = n;
 		int numColumns = columnNames.length;
 
 		// create storage for column names
@@ -302,6 +294,15 @@ public class CSVData {
 	}
 	
 	/***
+	 * Returns the number of rows
+	 * 
+	 * @return the number of rows
+	 */
+	public int getNumRows() {
+		return this.numRows;
+	}
+	
+	/***
 	 * Saves the current state of the object into a CSV file
 	 */
 	public void saveCurrentState() {
@@ -325,6 +326,20 @@ public class CSVData {
 	
 	public String getFilePath() {
 		return filePathToCSV;
+	}
+	
+	public String dataToString() {
+		StringBuilder output = new StringBuilder(); 
+		
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[0].length; j++) {
+				output.append(data[i][j] + ", ");
+			}
+			int length = output.length();
+			output.delete(length-2, length);
+			output.append("\n");
+		}
+		return output.toString();
 	}
 	
 }
