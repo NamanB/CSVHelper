@@ -331,14 +331,19 @@ public class CSVData {
 	public String dataToString() {
 		StringBuilder output = new StringBuilder(); 
 		
+		for (String columnName : this.columnNames)
+			output.append(columnName + ", ");
+		
 		for (int i = 0; i < data.length; i++) {
-			for (int j = 0; j < data[0].length; j++) {
-				output.append(data[i][j] + ", ");
-			}
 			int length = output.length();
 			output.delete(length-2, length);
 			output.append("\n");
+			for (int j = 0; j < data[0].length; j++) {
+				output.append(data[i][j] + ", ");
+			}
 		}
+		output.delete(output.length()-2, output.length());
+		
 		return output.toString();
 	}
 	
