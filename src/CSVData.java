@@ -117,6 +117,33 @@ public class CSVData {
 	}
 	
 	/***
+	 * Corrects the PowerSense Data into the specific data and format we want
+	 * 
+	 * @param filepath the file path
+	 * @return the corrected CSVData object
+	 */
+	public static CSVData newCSVCorrectedPowerSenseData(String filepath) {
+//		CSVData current = new CSVData(filepath, 0);
+		return null;
+	}
+	
+	/***
+	 * Deletes the columns in the indexes specified
+	 * @param columnIndexes the indexes of the columns to be deleted
+	 */
+	public void deleteColumns(int[] columnIndexes) {
+		
+	}
+	
+	/***
+	 * Deletes the column in the index specified
+	 * @param columnIndex the index of the column to be deleted
+	 */
+	public void deleteColumn(int columnIndex) {
+//		double[][] data = new double[this.columnNames.length - 1][this.numRows];
+	}
+	
+	/***
 	 * Returns an array containing the column names
 	 * 
 	 * @param titleLine the string containing the title names separated by columns
