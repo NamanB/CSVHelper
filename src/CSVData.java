@@ -118,6 +118,7 @@ public class CSVData {
 	
 	/***
 	 * Creates a CSVData object specifically for data from powerSense
+	 * 
 	 * @param filepath
 	 */
 	public CSVData(String filepath) {
@@ -151,6 +152,10 @@ public class CSVData {
 				}
 			}
 		}
+		
+		//re-orders the columns in the order of acceleration then gryo
+		for (int i = 1; i < 4; i++) 
+			swapColumns(i, i+3);
 	}
 	
 	/***
@@ -161,6 +166,25 @@ public class CSVData {
 	 */
 	public static CSVData newCSVCorrectedPowerSenseData(String filepath) {
 		return new CSVData(filepath);
+	}
+	
+	/***
+	 * Swaps two columns with the indexes specified. It makes sure to keep the titles in corresponding 
+	 * order with the data.
+	 * 
+	 * @param index1 the index for the 1st column to be swapped
+	 * @param index2 the index for the 2nd column to be swapped
+	 */
+	public void swapColumns(int index1, int index2) {
+		String temp = this.columnNames[index1];
+		this.columnNames[index1] = this.columnNames[index2];
+		this.columnNames[index2] = temp;
+		
+		double[] col1 = this.getColumn(index1);
+		double[] col2 = this.getColumn(index2);
+		
+		this.setColumn(index1, col2);
+		this.setColumn(index2, col1);
 	}
 	
 	/***
@@ -213,7 +237,7 @@ public class CSVData {
 		double[] columnValues = new double[data.length];
 		
 		for (int i = 0; i < data.length; i++) 
-			columnValues[i] = data[columnIndex][i];
+			columnValues[i] = data[i][columnIndex];
 		
 		return columnValues;
 	}
@@ -370,7 +394,7 @@ public class CSVData {
 	 */
 	public void setColumn(int columnIndex, double[] columnValues) {
 		for (int i = 0; i < data[0].length; i++)
-			data[columnIndex][i] = columnValues[i];
+			data[i][columnIndex] = columnValues[i];
 	}
 	
 	/***
