@@ -123,8 +123,11 @@ public class CSVData {
 	 * @return the corrected CSVData object
 	 */
 	public static CSVData newCSVCorrectedPowerSenseData(String filepath) {
-//		CSVData current = new CSVData(filepath, 0);
-		return null;
+		CSVData current = new CSVData(filepath, 0);
+		
+		current.deleteColumns(new int[] {1,2,3,7,8,9,13,14,15,16,17,18,19,20,21});
+		
+		return current;
 	}
 	
 	/***
@@ -150,6 +153,7 @@ public class CSVData {
 				if (column != columnIndex) data[row][currentCol++] = data[row][column];
 			}
 		}
+		this.data = data;
 	}
 	
 	/***
