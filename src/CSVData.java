@@ -437,10 +437,12 @@ public class CSVData {
 	}
 	
 	/***
-	 * Saves the current state of the object into a CSV file
+	 * Saves the current state of the file
+	 * 
+	 * @param filepath the file path to save the file (something like /Users/naman/Desktop/state1.txt)
 	 */
-	public void saveCurrentState() {
-		
+	public void saveCurrentState(String filepath) {
+		IOMobilizer.writeDataToFile(filepath, this.dataToString());
 	}
 	
 	/***
@@ -462,6 +464,36 @@ public class CSVData {
 		return filePathToCSV;
 	}
 	
+	/***
+	 * Returns a string that contains the titles, and data in the rows specified
+	 * 
+	 * @param startIndex the starting index
+	 * @param numRows the number of rows to get the data from
+	 * @return a string version of those rows after the titles
+	 */
+	public String displayNRows(int startIndex, int numRows) {
+		StringBuilder output = new StringBuilder();
+		
+		for (String columnName : this.columnNames)
+			output.append(columnName + ", ");
+		
+		for (int i = startIndex; i < numRows; i++) {
+			int length = output.length();
+			output.delete(length-2, length);
+			output.append("\n");
+			for (int j = 0; j < data[0].length; j++) {
+				output.append(data[i][j] + ", ");
+			}
+		}
+		output.delete(output.length()-2, output.length());
+		
+		return output.toString();
+	}
+	
+	/***
+	 * Returns a string version of the CSVData object that could be turned into a .txt file
+	 * @return a string version of the CSVData object that could be turned into a .txt file
+	 */
 	public String dataToString() {
 		StringBuilder output = new StringBuilder(); 
 		
