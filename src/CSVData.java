@@ -132,7 +132,9 @@ public class CSVData {
 	 * @param columnIndexes the indexes of the columns to be deleted
 	 */
 	public void deleteColumns(int[] columnIndexes) {
-		
+		for (int index = 0; index < columnIndexes.length; index++) {
+			deleteColumn(columnIndexes[index]);
+		}
 	}
 	
 	/***
@@ -140,7 +142,14 @@ public class CSVData {
 	 * @param columnIndex the index of the column to be deleted
 	 */
 	public void deleteColumn(int columnIndex) {
-//		double[][] data = new double[this.columnNames.length - 1][this.numRows];
+		double[][] data = new double[this.columnNames.length - 1][this.numRows];
+		
+		for (int row = 0; row < data[0].length; row++) {
+			int currentCol = 0;
+			for (int column = 0; column < data.length; column++) {
+				if (column != columnIndex) data[row][currentCol++] = data[row][column];
+			}
+		}
 	}
 	
 	/***
