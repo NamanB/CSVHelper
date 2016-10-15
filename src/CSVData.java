@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /***
@@ -24,14 +23,14 @@ public class CSVData {
 	 * @param colunmNames the names of the columns
 	 * @return a CVSData object for that file
 	 */
-	public CSVData(String filepath, int startRow, String[] columnNames) {
+	public CSVData(String filepath, int numLinesToIgnore, String[] columnNames) {
 		this.filePathToCSV = filepath;
 
 		String dataString = readFileAsString(filepath);
 		String[] lines = dataString.split("\n");
 
 		// number of data points
-		int n = lines.length - startRow;
+		int n = lines.length - numLinesToIgnore;
 		this.numRows = n;
 		int numColumns = columnNames.length;
 
@@ -40,8 +39,8 @@ public class CSVData {
 
 		// create storage for data
 		this.data = new double[n][numColumns];
-		for (int i = 0; i < lines.length - startRow; i++) {
-			String line = lines[startRow + i];
+		for (int i = 0; i < lines.length - numLinesToIgnore; i++) {
+			String line = lines[numLinesToIgnore + i];
 			String[] coords = line.split(",");
 			for (int j = 0; j < numColumns; j++) {
 				if (coords[j].endsWith("#")) coords[j] = coords[j].substring(0, coords[j].length()-1);
@@ -57,29 +56,31 @@ public class CSVData {
 	 * must contain the names of the columns
 	 * 
 	 * @param filename the file to read
-	 * @param numLinesToIgnore number of lines at the top to ignore
+	 * @param numLinesToIgnore the line where the column names is, where the next line has the data
 	 * @return a CVSData object for that file
 	 */
-	public CSVData(String filepath, int startRow) {
+	public CSVData(String filepath, int numLinesToIgnore) {
 		this.filePathToCSV = filepath;
 
 		String dataString = readFileAsString(filepath);
 		String[] lines = dataString.split("\n");
 
 		// create storage for column names
-		String[] colNames = getColumnNames(lines[0]);
+		String[] colNames = getColumnNames(lines[numLinesToIgnore]);
 		this.columnNames = colNames;
-
+		
+		numLinesToIgnore++;
+		
 		// number of data points
-		int n = lines.length - startRow;
+		int n = lines.length - numLinesToIgnore;
 		this.numRows = n;
 		int numColumns = colNames.length;
 
 		
 		// create storage for data
 		this.data = new double[n][numColumns];
-		for (int i = 0; i < lines.length - startRow; i++) {
-			String line = lines[startRow + i];
+		for (int i = 0; i < lines.length - numLinesToIgnore; i++) {
+			String line = lines[numLinesToIgnore + i];
 			String[] coords = line.split(",");
 			for (int j = 0; j < numColumns; j++) {
 				if (coords[j].endsWith("#")) coords[j] = coords[j].substring(0, coords[j].length()-1);
