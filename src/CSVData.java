@@ -116,6 +116,10 @@ public class CSVData {
 		return new CSVData(filepath, numLinesToIgnore, columnNames);
 	}
 	
+	/***
+	 * Creates a CSVData object specifically for data from powerSense
+	 * @param filepath
+	 */
 	public CSVData(String filepath) {
 		this.filePathToCSV = filepath;
 
@@ -123,8 +127,8 @@ public class CSVData {
 		String[] lines = dataString.split("\n");
 
 		// create storage for column names
-				this.columnNames = new String[] {"time(ms)", "gyro x", "gyro y", "gyro z", 
-						"accel x", "accel y", "accel z"};
+		this.columnNames = new String[] {"time(ms)", "gyro x", "gyro y", "gyro z", 
+				"accel x", "accel y", "accel z"};
 		
 		// number of data points
 		int n = lines.length - 1;
@@ -132,16 +136,18 @@ public class CSVData {
 		int numColumns = 13;
 
 		// create storage for data
-		this.data = new double[n][numColumns];
+		this.data = new double[n][this.columnNames.length];	
 		for (int i = 0; i < lines.length - 1; i++) {
 			String line = lines[1 + i];
 			String[] coords = line.split(",");
+			int currentCol = 0; 
+			
 			for (int j = 0; j < numColumns; j++) {
 				if (coords[j].endsWith("#")) coords[j] = coords[j].substring(0, coords[j].length()-1);
 				if (j != 1 && j != 2 && j != 3 && j != 7 && j != 8 && j != 9 && j != 13 && j != 14 && 
 						j != 15 && j != 16 && j != 17 && j != 18 && j != 19 && j != 20) {
 					double val = Double.parseDouble(coords[j]);
-					data[i][j] = val;
+					data[i][currentCol++] = val;
 				}
 			}
 		}
@@ -155,41 +161,6 @@ public class CSVData {
 	 */
 	public static CSVData newCSVCorrectedPowerSenseData(String filepath) {
 		return new CSVData(filepath);
-	}
-	
-	/***
-	 * Deletes the columns in the indexes specified
-	 * @param columnIndexes the indexes of the columns to be deleted
-	 */
-	public void deleteColumns(int[] columnIndexes) {
-		for (int index = 0; index < columnIndexes.length; index++) {
-			deleteColumn(columnIndexes[index]);
-		}
-	}
-	
-	/***
-	 * Deletes the column in the index specified
-	 * @param columnIndex the index of the column to be deleted
-	 */
-	public void deleteColumn(int columnIndex) {
-		int currentIndex = 0;
-		String[] columnNames = new String[this.columnNames.length - 1];
-		
-		for (int i = 0; i < this.columnNames.length; i++) 
-			if (i != columnIndex) columnNames[currentIndex++] = this.columnNames[i];
-		
-		double[][] data = new double[this.numRows][this.columnNames.length - 1];
-		
-		for (int row = 0; row < data[0].length; row++) {
-			int currentCol = 0;
-			for (int column = 0; column < this.columnNames.length; column++) {
-				System.out.print(row + " - " + columnIndex + " = " + column + ", data: " + this.data[row][column]);
-				if (column != columnIndex) {data[row][currentCol++] = this.data[row][column];
-				System.out.println(", " + data[row][currentCol-1]);}
-				System.out.println();
-			}
-		}
-		this.data = data;
 	}
 	
 	/***
