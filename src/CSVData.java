@@ -116,6 +116,37 @@ public class CSVData {
 		return new CSVData(filepath, numLinesToIgnore, columnNames);
 	}
 	
+	public CSVData(String filepath) {
+		this.filePathToCSV = filepath;
+
+		String dataString = readFileAsString(filepath);
+		String[] lines = dataString.split("\n");
+
+		// create storage for column names
+				this.columnNames = new String[] {"time(ms)", "gyro x", "gyro y", "gyro z", 
+						"accel x", "accel y", "accel z"};
+		
+		// number of data points
+		int n = lines.length - 1;
+		this.numRows = n;
+		int numColumns = 13;
+
+		// create storage for data
+		this.data = new double[n][numColumns];
+		for (int i = 0; i < lines.length - 1; i++) {
+			String line = lines[1 + i];
+			String[] coords = line.split(",");
+			for (int j = 0; j < numColumns; j++) {
+				if (coords[j].endsWith("#")) coords[j] = coords[j].substring(0, coords[j].length()-1);
+				if (j != 1 && j != 2 && j != 3 && j != 7 && j != 8 && j != 9 && j != 13 && j != 14 && 
+						j != 15 && j != 16 && j != 17 && j != 18 && j != 19 && j != 20) {
+					double val = Double.parseDouble(coords[j]);
+					data[i][j] = val;
+				}
+			}
+		}
+	}
+	
 	/***
 	 * Corrects the PowerSense Data into the specific data and format we want
 	 * 
@@ -123,11 +154,7 @@ public class CSVData {
 	 * @return the corrected CSVData object
 	 */
 	public static CSVData newCSVCorrectedPowerSenseData(String filepath) {
-		CSVData current = new CSVData(filepath, 0);
-		
-		current.deleteColumns(new int[] {1,2,3,7,8,9,13,14,15,16,17,18,19,20,21});
-		
-		return current;
+		return new CSVData(filepath);
 	}
 	
 	/***
@@ -145,12 +172,21 @@ public class CSVData {
 	 * @param columnIndex the index of the column to be deleted
 	 */
 	public void deleteColumn(int columnIndex) {
-		double[][] data = new double[this.columnNames.length - 1][this.numRows];
+		int currentIndex = 0;
+		String[] columnNames = new String[this.columnNames.length - 1];
+		
+		for (int i = 0; i < this.columnNames.length; i++) 
+			if (i != columnIndex) columnNames[currentIndex++] = this.columnNames[i];
+		
+		double[][] data = new double[this.numRows][this.columnNames.length - 1];
 		
 		for (int row = 0; row < data[0].length; row++) {
 			int currentCol = 0;
-			for (int column = 0; column < data.length; column++) {
-				if (column != columnIndex) data[row][currentCol++] = data[row][column];
+			for (int column = 0; column < this.columnNames.length; column++) {
+				System.out.print(row + " - " + columnIndex + " = " + column + ", data: " + this.data[row][column]);
+				if (column != columnIndex) {data[row][currentCol++] = this.data[row][column];
+				System.out.println(", " + data[row][currentCol-1]);}
+				System.out.println();
 			}
 		}
 		this.data = data;
