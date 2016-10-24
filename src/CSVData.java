@@ -1,4 +1,6 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -99,7 +101,7 @@ public class CSVData {
 	 * @param numLinesToIgnore number of lines at the top to ignore
 	 * @return a CVSData object for that file
 	 */
-	public static CSVData newCSVData(String filepath, int numLinesToIgnore) {
+	public static CSVData readCSVData(String filepath, int numLinesToIgnore) {
 		return new CSVData(filepath, numLinesToIgnore);
 	}
 	
@@ -112,7 +114,7 @@ public class CSVData {
 	 * @param numLinesToIgnore number of lines at the top to ignore
 	 * @return a CVSData object for that file
 	 */
-	public static CSVData newCSVData(String filepath, int numLinesToIgnore, String[] columnNames) {
+	public static CSVData readCSVData(String filepath, int numLinesToIgnore, String[] columnNames) {
 		return new CSVData(filepath, numLinesToIgnore, columnNames);
 	}
 	
@@ -442,8 +444,16 @@ public class CSVData {
 	 * @param filepath the file path to save the file (something like /Users/naman/Desktop/state1.txt)
 	 */
 	public void saveCurrentState(String filepath) {
-		IOMobilizer.writeDataToFile(filepath, this.dataToString());
+		File outFile = new File(filepath);
+		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(outFile))) {
+			writer.write(this.dataToString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
 	
 	/***
 	 * Finds the index for the column specified by name. 
